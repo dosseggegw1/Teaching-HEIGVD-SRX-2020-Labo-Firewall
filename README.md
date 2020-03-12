@@ -125,7 +125,7 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 
 | Adresse IP source | Adresse IP destination | Type        | Port src | Port dst | Action |
 | :---:             | :---:                  | :---:       | :------: | :------: | :----: |
-| 192.168.100.0/24  | 192.168.100.2          | TCP         | any      | 22       | ACCEPT |
+| 192.168.100.3     | 192.168.100.2          | TCP         | any      | 22       | ACCEPT |
 | 192.168.200.0/24  | 192.168.100.0/24       | ICMP echoreq| N/A      | N/A      | ACCEPT |
 | 192.168.100.0/24  | 192.168.200.0/24       | ICMP echoreq| N/A      | N/A      | ACCEPT |
 | 192.168.100.0/24  | 192.168.200.3          | TCP         | any      | 80       | ACCEPT |
@@ -596,6 +596,7 @@ ssh root@192.168.200.3 (password : celui que vous avez configuré)
   <li>En général, à quoi faut-il particulièrement faire attention lors de l'écriture des règles du pare-feu pour ce type de connexion ? 
   </li>                                  
 </ol>
+
 
 ---
 **Réponse**
