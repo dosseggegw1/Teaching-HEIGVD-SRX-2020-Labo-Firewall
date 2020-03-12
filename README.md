@@ -397,7 +397,20 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+#Politique
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+#ping
+iptables -A FORWARD -p icmp --icmp-type 8 --source 192.168.200.0/24 --destination 192.168.100.0/24 -j ACCEPT 
+iptables -A FORWARD -p icmp --icmp-type 8 --source 192.168.100.0/24 --destination 192.168.200.0/24 -j ACCEPT 
+iptables -A FORWARD -p icmp --icmp-type 8 --source 192.168.100.0/24 -o eth0 -j ACCEPT 
+
+
+iptables -A FORWARD -p icmp --icmp-type 0 --source 192.168.100.0/24 --destination 192.168.200.0/24 -j ACCEPT 
+iptables -A FORWARD -p icmp --icmp-type 0 --source 192.168.200.0/24 --destination 192.168.100.0/24 -j ACCEPT 
+iptables -A FORWARD -p icmp --icmp-type 0 --destination 192.168.100.0/24 -i eth0 -j ACCEPT 
 ```
 ---
 
@@ -410,7 +423,7 @@ LIVRABLE : Commandes iptables
 
 ```bash
 ping 8.8.8.8
-``` 	            
+```
 Faire une capture du ping.
 
 ---
@@ -583,7 +596,6 @@ ssh root@192.168.200.3 (password : celui que vous avez configuré)
   <li>En général, à quoi faut-il particulièrement faire attention lors de l'écriture des règles du pare-feu pour ce type de connexion ? 
   </li>                                  
 </ol>
-
 
 ---
 **Réponse**
