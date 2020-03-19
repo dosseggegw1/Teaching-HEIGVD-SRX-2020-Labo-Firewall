@@ -308,6 +308,10 @@ ping 8.8.8.8
 
 **LIVRABLE : capture d'écran de votre ping vers l'Internet.**
 
+![](figures/ping_fail_DMZ8888.png)
+
+![](figures/ping_fail_LAN8888.png)
+
 ---
 
 ### Configuration réseau du firewall
