@@ -1,3 +1,5 @@
+
+
 # Teaching-HEIGVD-SRX-2020-Laboratoire-Firewall
 
 **ATTENTION : Commencez par créer un Fork de ce repo et travaillez sur votre fork.**
@@ -405,6 +407,9 @@ Commandes iptables :
 ---
 
 ```bash
+#Active le mode avec état
+iptables -A FORWARD -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
 #Politique
 iptables -P INPUT DROP
 iptables -P OUTPUT DROP
@@ -422,7 +427,7 @@ iptables -A FORWARD -p icmp --icmp-type 0 --destination 192.168.100.0/24 -i eth0
 ```
 ---
 
-### Questions
+### Questions TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 
 <ol type="a" start="2">
   <li>Afin de tester la connexion entre le client (Client\_in\_LAN) et le WAN, tapez la commande suivante depuis le client : 
@@ -435,9 +440,9 @@ ping 8.8.8.8
 Faire une capture du ping.
 
 ---
-![]()
-
 **LIVRABLE : capture d'écran de votre ping vers l'Internet.**
+
+![](figures/03_ping.png)
 
 ---
 
@@ -447,20 +452,20 @@ Faire une capture du ping.
 </ol>
 
 
-| De Client\_in\_LAN à | OK/KO | Commentaires et explications |
-| :---                 | :---: | :---                         |
-| Interface DMZ du FW  |       |                              |
-| Interface LAN du FW  |       |                              |
-| Client LAN           |       |                              |
-| Serveur WAN          |       |                              |
+| De Client\_in\_LAN à | OK/KO | Commentaires et explications                       |
+| :------------------- | :---: | :------------------------------------------------- |
+| Interface DMZ du FW  |  KO   | accès pas autorisé selon les règles définies avant |
+| Interface LAN du FW  |  KO   | accès pas autorisé selon les règles définies avant |
+| Client LAN           |  OK   | ping lui-même                                      |
+| Serveur WAN          |  OK   | ping autorisé pour internet                        |
 
 
-| De Server\_in\_DMZ à | OK/KO | Commentaires et explications |
-| :---                 | :---: | :---                         |
-| Interface DMZ du FW  |       |                              |
-| Interface LAN du FW  |       |                              |
-| Serveur DMZ          |       |                              |
-| Serveur WAN          |       |                              |
+| De Server\_in\_DMZ à | OK/KO | Commentaires et explications                     |
+| :------------------- | :---: | :----------------------------------------------- |
+| Interface DMZ du FW  |  KO   | accès pas autorisé selon les règles défini avant |
+| Interface LAN du FW  |  KO   | accès pas autorisé selon les règles défini avant |
+| Serveur DMZ          |  OK   | ping lui-même                                    |
+| Serveur WAN          |  KO   | ping non autorisé pour internet                  |
 
 
 ## Règles pour le protocole DNS
@@ -480,6 +485,8 @@ ping www.google.com
 
 **LIVRABLE : capture d'écran de votre ping.**
 
+![](figures/05_ping_google.png)
+
 ---
 
 * Créer et appliquer la règle adéquate pour que la **condition 1 du cahier des charges** soit respectée.
@@ -489,7 +496,8 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -p tcp --source 192.168.100.0/24 -o eth0 --dport 53 -j ACCEPT 
+iptables -A FORWARD -p udp --source 192.168.100.0/24 -o eth0 --dport 53 -j ACCEPT 
 ```
 
 ---
@@ -502,6 +510,8 @@ LIVRABLE : Commandes iptables
 
 **LIVRABLE : capture d'écran de votre ping.**
 
+![](figures/06_ping_googleOk.png)
+
 ---
 
 <ol type="a" start="6">
@@ -511,7 +521,7 @@ LIVRABLE : Commandes iptables
 ---
 **Réponse**
 
-**LIVRABLE : Votre réponse ici...**
+Le ping est autorisé vers l'extérieur mais comme nous avons spécifié un nom de domaine et que le protocole DNS n'est pas autorisé la transformation en adresse IP n'est pas possible et donc fait échoué le ping.
 
 ---
 
@@ -531,7 +541,9 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -p tcp --source 192.168.100.0/24 -o eth0 --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --source 192.168.100.0/24 -o eth0 --dport 8080 -j ACCEPT
+iptables -A FORWARD -p tcp --source 192.168.100.0/24 -o eth0 --dport 443 -j ACCEPT
 ```
 
 ---
@@ -543,7 +555,8 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -p tcp --source 192.168.100.0/24 --destination 192.168.200.3 --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp -i eth0 --destination 192.168.200.3 --dport 80 -j ACCEPT
 ```
 ---
 
@@ -554,6 +567,10 @@ LIVRABLE : Commandes iptables
 ---
 
 **LIVRABLE : capture d'écran.**
+
+![](figures/07_dl_dmz.png)
+
+![07_dl_serveur](figures/07_dl_serveur.png)
 
 ---
 
@@ -570,7 +587,8 @@ Commandes iptables :
 ---
 
 ```bash
-LIVRABLE : Commandes iptables
+iptables -A FORWARD -p tcp --source 192.168.100.3 --destination 192.168.100.2 --dport 22 -j ACCEPT
+iptables -A FORWARD -p tcp --source 192.168.100.3 --destination 192.168.200.3 --dport 22 -j ACCEPT
 ```
 
 ---
@@ -585,6 +603,8 @@ ssh root@192.168.200.3 (password : celui que vous avez configuré)
 
 **LIVRABLE : capture d'écran de votre connexion ssh.**
 
+![](figures/08_ssh.png)
+
 ---
 
 <ol type="a" start="9">
@@ -594,7 +614,7 @@ ssh root@192.168.200.3 (password : celui que vous avez configuré)
 ---
 **Réponse**
 
-**LIVRABLE : Votre réponse ici...**
+Permet la connexion à distance sur le serveur pour le configurer tout en chiffrant la connexion entre le client et le serveur.
 
 ---
 
@@ -603,11 +623,10 @@ ssh root@192.168.200.3 (password : celui que vous avez configuré)
   </li>                                  
 </ol>
 
-
 ---
 **Réponse**
 
-**LIVRABLE : Votre réponse ici...**
+Il faut faire attention à ne pas autoriser n'importe qui à se connecter au serveur mais uniquement des adresses IP autorisées.
 
 ---
 
@@ -623,4 +642,7 @@ A présent, vous devriez avoir le matériel nécessaire afin de reproduire la ta
 
 **LIVRABLE : capture d'écran avec toutes vos règles.**
 
+![](figures/09_listes.png)
+
 ---
+
