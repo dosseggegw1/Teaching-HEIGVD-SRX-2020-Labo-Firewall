@@ -125,20 +125,20 @@ _Lors de la définition d'une zone, spécifier l'adresse du sous-réseau IP avec
 
 **LIVRABLE : Remplir le tableau**
 
-| Adresse IP source | Adresse IP destination | Type        | Port src | Port dst | Action |
-| :---:             | :---:                  | :---:       | :------: | :------: | :----: |
-| 192.168.100.3     | 192.168.100.2          | TCP         | any      | 22       | ACCEPT |
-| 192.168.200.0/24  | 192.168.100.0/24       | ICMP echoreq| N/A      | N/A      | ACCEPT |
-| 192.168.100.0/24  | 192.168.200.0/24       | ICMP echoreq| N/A      | N/A      | ACCEPT |
-| 192.168.100.0/24  | 192.168.200.3          | TCP         | any      | 80       | ACCEPT |
-| 192.168.100.0/24  | 192.168.200.3          | TCP         | any      | 22       | ACCEPT |
-| WAN               | 192.168.200.3          | TCP         | any      | 80       | ACCEPT |
-| 192.168.100.0/24  | WAN                    | UDP/TCP     | any      | 53       | ACCEPT |
-| 192.168.100.0/24  | WAN                    | ICMP echoreq| N/A      | N/A      | ACCEPT |
-| 192.168.100.0/24  | WAN                    | TCP         | any      | 80       | ACCEPT |
-| 192.168.100.0/24  | WAN                    | TCP         | any      | 8080     | ACCEPT |
-| 192.168.100.0/24  | WAN                    | TCP         | any      | 445      | ACCEPT |
-| any               | any                    | any         | any      | any      | DROP   |
+| Adresse IP source | Adresse IP destination |     Type     | Port src | Port dst | Action |
+| :---------------: | :--------------------: | :----------: | :------: | :------: | :----: |
+|   192.168.100.3   |     192.168.100.2      |     TCP      |   any    |    22    | ACCEPT |
+| 192.168.200.0/24  |    192.168.100.0/24    | ICMP echoreq |   N/A    |   N/A    | ACCEPT |
+| 192.168.100.0/24  |    192.168.200.0/24    | ICMP echoreq |   N/A    |   N/A    | ACCEPT |
+| 192.168.100.0/24  |     192.168.200.3      |     TCP      |   any    |    80    | ACCEPT |
+|   192.168.100.3   |     192.168.200.3      |     TCP      |   any    |    22    | ACCEPT |
+|        WAN        |     192.168.200.3      |     TCP      |   any    |    80    | ACCEPT |
+| 192.168.100.0/24  |          WAN           |   UDP/TCP    |   any    |    53    | ACCEPT |
+| 192.168.100.0/24  |          WAN           | ICMP echoreq |   N/A    |   N/A    | ACCEPT |
+| 192.168.100.0/24  |          WAN           |     TCP      |   any    |    80    | ACCEPT |
+| 192.168.100.0/24  |          WAN           |     TCP      |   any    |   8080   | ACCEPT |
+| 192.168.100.0/24  |          WAN           |     TCP      |   any    |   443    | ACCEPT |
+|        any        |          any           |     any      |   any    |   any    |  DROP  |
 
 WAN corresponds à 0.0.0.0/0 sans les réseaux internes (192.168.100.0/24 et 192.168.200.0/24)
 
@@ -622,7 +622,6 @@ Permet la connexion à distance sur le serveur pour le configurer tout en chiffr
   <li>En général, à quoi faut-il particulièrement faire attention lors de l'écriture des règles du pare-feu pour ce type de connexion ? 
   </li>                                  
 </ol>
-
 ---
 **Réponse**
 
