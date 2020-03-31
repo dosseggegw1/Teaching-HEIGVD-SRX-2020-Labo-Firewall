@@ -427,7 +427,7 @@ iptables -A FORWARD -p icmp --icmp-type 0 --destination 192.168.100.0/24 -i eth0
 ```
 ---
 
-### Questions TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+### Questions
 
 <ol type="a" start="2">
   <li>Afin de tester la connexion entre le client (Client\_in\_LAN) et le WAN, tapez la commande suivante depuis le client : 
